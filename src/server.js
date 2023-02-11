@@ -1,13 +1,27 @@
-// CommonJS => require
-// ESModules => import/export
+import http from "node:http";
 
-import http from 'node:http';
-
-// Criar um usuário (name, email, senha)
+const users = [];
 
 const server = http.createServer((request, response) => {
-  return response.end('Hello World')
-})
+  const { method, url } = request;
 
-server.listen(3333)
-// localhost:3333
+  if (method === "GET" && url === "/users") {
+    return response
+      .setHeader("Content-type", "application/json")
+      .end(JSON.stringify(users));
+  }
+
+  if (method === "POST" && url === "/users") {
+    users.push({
+      id: 1,
+      name: "John Doe",
+      email: "johndoe@example.com",
+    });
+
+    return response.end("Criação de usuários");
+  }
+
+  return response.end("Hello World");
+});
+
+server.listen(3333);
