@@ -36,6 +36,8 @@ export const routes = [
   {
     method: "DELETE",
     path: "/users/:id",
-    handler: (request, response) => {},
+    handler: (request, response) => {
+      return response.writeHead(201).end();
+    },
   },
 ];
