@@ -26,10 +26,10 @@ const server = http.createServer(async (request, response) => {
 
   if (route) {
     const routeParams = request.url.match(route.path);
+    const {query, ...params} = routeParams.groups
 
-     console.log(extractQueryParams(routeParams.groups.query))
-
-    request.params = { ...routeParams.groups }; // remove object null que vem bugado
+    request.params = params
+    request.query = query ? extractQueryParams(query) : {}
 
     return route.handler(request, response);
   }
