@@ -1,6 +1,7 @@
 import http from "node:http";
 import { json } from "./middlewares/json.js";
 import { routes } from "./routes.js";
+import { extractQueryParams } from "./utils/extract-query-params.js";
 
 // Query Parameters: URL Stateful => filtros, paginação, não-obrigatórios
 // Route Parameters: Identificação de recurso
@@ -25,6 +26,8 @@ const server = http.createServer(async (request, response) => {
 
   if (route) {
     const routeParams = request.url.match(route.path);
+
+     console.log(extractQueryParams(routeParams.groups.query))
 
     request.params = { ...routeParams.groups }; // remove object null que vem bugado
 
